@@ -1,0 +1,159 @@
+import pandas as pd
+
+# A pandas series have indexes & values
+data = pd.Series([10, 20, 30, 40, 50, 60, 70])
+display(data)
+
+data = pd.Series([10, 20, 30, 40, 50, 60, 70], index = ['a','b','c','d','e','f','g'])
+
+data.values
+
+data.index
+
+# Collection of Series
+data_series = {
+              'Column1' : pd.Series([10, 20, 30, 40, 50, 60, 70], index = ['a','b','c','d','e','f','g'], dtype = 'int16'),
+              'Column2' : pd.Series([10, 20, 30, 40, 50, 60, 70], index = ['a','b','c','d','e','f','g'], dtype = 'int16') 
+              }
+
+data_series
+
+pd.DataFrame(data_series)
+
+movies_df = pd.read_csv('https://raw.githubusercontent.com/ammishra08/MachineLearning/master/Datasets/movies.csv', sep=',', header = 0)
+movies_df
+
+# head() - Display first five rows, tail() displays last 5 rows of DF
+movies_df.head()
+
+movies_df.tail()
+
+# Read an excel file
+stock_data = pd.read_excel('https://github.com/ammishra08/MachineLearning/blob/master/Datasets/data_akbilgic.xlsx?raw=true', header = 1)
+display(stock_data)
+
+# Display Shape (rows, columns)
+movies_df.shape
+
+# Display the columns
+movies_df.columns
+
+print("Number of Rows: ", movies_df.shape[0])
+print("Number of Columns: ", movies_df.shape[1])
+
+# info() - Displays detailed info about the data
+movies_df.info()
+
+# Typecasting the Column Data Types
+movies_df['Rotten Tomatoes %'] = movies_df['Rotten Tomatoes %'].astype('int16')
+
+movies_df['Rotten Tomatoes %'].dtype
+
+# To select multiple columns
+movies_df [['Film','Genre','Audience score %','Rotten Tomatoes %']]
+
+# sample() is used to draw random samples from dataset containing all the columns
+movies_df.sample( n = 6)
+
+# using frac = 0.1 (10% of overall data)
+movies_df.sample(frac = 0.1)
+
+movies_df.loc[:,:]
+
+# slicing only rows
+movies_df.loc[10:20,:]
+
+movies_df.loc[10:20,'Film':'Profitability']
+
+movies_df.loc[10:20,['Film','Genre','Audience score %','Rotten Tomatoes %','Year']]
+
+# iloc - Uses index values to slice data 
+# slicing only rows
+movies_df.iloc[10:20,:]
+
+movies_df.iloc[10:20,0:6]
+
+# Last Column
+movies_df.iloc[10:25, -1]
+
+# Slicing with strides = 2
+movies_df.iloc[10:25:2, 0:7:2]
+
+# Slicing with strides = 2
+movies_df.iloc[10:25:2, 0::2]
+
+movies_df.filter(like = 'a')
+
+movies_df.filter(like = 'A').head()
+
+# Logical Operator
+movies_df[movies_df.Genre == 'Romance']
+
+movies_df[movies_df.Genre != 'Romance']
+
+movies_df[(movies_df.Genre != 'Romance') & (movies_df['Audience score %'] > 70)]
+
+movies_df[(movies_df.Genre == 'Romance') | (movies_df['Rotten Tomatoes %'] > 90)]
+
+movies_df[(movies_df['Rotten Tomatoes %'] > 90) | (movies_df['Rotten Tomatoes %'] < 30) ]
+
+movies_df['Profitability'].sort_values()
+
+# Descending Order
+movies_df['Profitability'].sort_values(ascending = False)
+
+movies_df.sort_values(by = 'Audience score %', ascending = False)
+
+movies_df.sort_values(by = 'Audience score %', ascending = False)
+
+# Find the unique elements from each columns
+movies_df['Audience score %'].unique()
+
+# Find the unique elements from each columns
+movies_df['Audience score %'].sort_values().unique()
+
+movies_df['Genre'].unique()
+
+# Dropping a row with index = 0 , default is axis = 0 
+movies_df.drop(2)
+
+# Dropping a row with index = 0 , default is axis = 0 
+movies_df.drop([2,4,6,8,10], axis = 0)
+
+# Dropping a Column using Column Names , axis = 1
+movies_df.drop(['Lead Studio','Worldwide Gross'], axis = 1)
+ 
+# movies_df.drop(['Lead Studio','Worldwide Gross'], axis = 1, inplace = True)
+
+movies_df['Genre'].value_counts()
+
+movies_df['Lead Studio'].value_counts()
+
+movies_df.drop_duplicates(inplace = True)
+
+movies_new = movies_df.set_index('Film')
+movies_new
+
+# Slicing the rows
+movies_new.loc['Across the Universe':'(500) Days of Summer'] 
+
+# Collection of Series
+data_series = {
+              'Column1' : pd.Series([10, 20, 30, 40, 50, 60, 70], index = ['a','b','c','d','e','f','h'], dtype = 'int16'),
+              'Column2' : pd.Series([10, 20, 30, 40, 50, 60, 70], index = ['a','b','c','d','e','f','g'], dtype = 'int16') 
+              }
+
+df = pd.DataFrame(data_series)
+df
+
+df.isnull().sum()
+
+df[df['Column1'].isnull() == True]
+
+df[df['Column2'].isnull() == True]
+
+# Line Plot
+movies_df['Rotten Tomatoes %'].plot(figsize = (12,7))
+
+stock_data['ISE'].plot(figsize = (12,7))
+
